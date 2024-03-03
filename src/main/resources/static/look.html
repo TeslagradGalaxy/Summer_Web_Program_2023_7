@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Data-Supervision</title>
+</head>
+<body>
+<tr>
+    <td>
+<div>
+    <h4>上传文件</h4>
+<form action="/upload" method="POST" enctype="multipart/form-data">
+    <input type="file" name="file" />
+    <button type="submit">上传文件</button>
+</form>
+</div>
+    </td>
+    <td>
+<div>
+<h4>发送删除请求示例</h4>
+<form id="deleteForm" action="/delete" method="post">
+    <button type="submit">删除数据</button>
+    <input type="hidden" name="_method" value="DELETE">
+</form>
+</div>
+    <td>
+    </td>
+<div>
+    <h4>显示性能数据</h4>
+    <form method="get" action="/your-backend-endpoint">
+        <!-- 可以添加其他表单字段 -->
+        <button type="submit">show_picture</button>
+    </form>
+</div>
+    </td>
+</tr>
+
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>性能监控</title>
+</head>
+<body>
+<h2>数据处理</h2>
+<form id="dataForm" enctype="multipart/form-data">
+  <input type="file" name="file" id="fileInput">
+  <button type="submit">上传文件</button>
+</form>
+
+<button id="clearDataButton">清除数据</button>
+
+<hr>
+
+<h2>性能展示</h2>
+<img id="imageDisplay" src="" alt="图像">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  // 上传文件
+  $('#dataForm').submit(function(event) {
+    event.preventDefault();
+
+    let fileInput = document.getElementById('fileInput');
+    let file = fileInput.files[0];
+
+    let formData = new FormData();
+    formData.append('file', file);
+
+    $.ajax({
+      url: '/data_show',
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function() {
+        console.log('文件上传成功');
+        // 文件上传成功后刷新图片展示
+        refreshImageDisplay();
+      },
+      error: function() {
+        console.log('文件上传失败');
+      }
+    });
+  });
+
+  // 清除数据
+  $('#clearDataButton').click(function() {
+    $.ajax({
+      url: '/data_show',
+      type: 'DELETE',
+      success: function() {
+        console.log('数据清除成功');
+        // 清除数据成功后刷新图片展示
+        refreshImageDisplay();
+      },
+      error: function() {
+        console.log('数据清除失败');
+      }
+    });
+  });
+
+  // 刷新图片展示
+  function refreshImageDisplay() {
+    let imageDisplay = document.getElementById('imageDisplay');
+    imageDisplay.src = '/pic_show?' + new Date().getTime(); // 添加时间戳以避免缓存
+  }
+
+  // 页面加载完成后刷新图片展示
+  $(document).ready(function() {
+    refreshImageDisplay();
+  });
+</script>
+</body>
+</html>
